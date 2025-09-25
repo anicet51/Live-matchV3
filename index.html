@@ -1038,7 +1038,7 @@
             return labels[eventType] || eventType;
         }
 
-        // -------- EXPORT WHATSAPP CORRIGÉ ------------
+        // -------- EXPORT WHATSAPP AVEC LOGOS RECTANGULAIRES PLUS GRANDS --------
         document.getElementById('generateImg').onclick = function() {
             const canvas = document.getElementById('matchCanvas');
             const ctx = canvas.getContext('2d');
@@ -1062,26 +1062,12 @@
             ctx.strokeText(matchState.title, canvas.width/2, 80);
             ctx.fillText(matchState.title, canvas.width/2, 80);
 
-            // Noms des équipes (avec fallback si vides)
-            const homeTeamName = matchState.homeTeam || 'Équipe Domicile';
-            const awayTeamName = matchState.awayTeam || 'Équipe Visiteur';
-
-            ctx.font = 'bold 36px Arial';
-            ctx.strokeText(homeTeamName, canvas.width/4, 220);
-            ctx.fillText(homeTeamName, canvas.width/4, 220);
-            ctx.strokeText(awayTeamName, 3*canvas.width/4, 220);
-            ctx.fillText(awayTeamName, 3*canvas.width/4, 220);
-
-            // Logos des équipes (cercles)
+            // Logos des équipes (RECTANGULAIRES ET PLUS GRANDS - 100x100px)
             if (matchState.homeLogoDataUrl) {
                 const homeImg = new Image();
                 homeImg.onload = function() {
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.arc(canvas.width/4, 160, 40, 0, 2 * Math.PI);
-                    ctx.clip();
-                    ctx.drawImage(homeImg, canvas.width/4 - 40, 120, 80, 80);
-                    ctx.restore();
+                    // Logo rectangulaire 100x100 pixels (pas de découpe ronde)
+                    ctx.drawImage(homeImg, canvas.width/4 - 50, 120, 100, 100);
                 };
                 homeImg.src = matchState.homeLogoDataUrl;
             }
@@ -1089,37 +1075,43 @@
             if (matchState.awayLogoDataUrl) {
                 const awayImg = new Image();
                 awayImg.onload = function() {
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.arc(3*canvas.width/4, 160, 40, 0, 2 * Math.PI);
-                    ctx.clip();
-                    ctx.drawImage(awayImg, 3*canvas.width/4 - 40, 120, 80, 80);
-                    ctx.restore();
+                    // Logo rectangulaire 100x100 pixels (pas de découpe ronde)  
+                    ctx.drawImage(awayImg, 3*canvas.width/4 - 50, 120, 100, 100);
                 };
                 awayImg.src = matchState.awayLogoDataUrl;
             }
 
-            // Scores
+            // Noms des équipes (décalés sous les logos)
+            const homeTeamName = matchState.homeTeam || 'Équipe Domicile';
+            const awayTeamName = matchState.awayTeam || 'Équipe Visiteur';
+
+            ctx.font = 'bold 32px Arial';
+            ctx.strokeText(homeTeamName, canvas.width/4, 250);
+            ctx.fillText(homeTeamName, canvas.width/4, 250);
+            ctx.strokeText(awayTeamName, 3*canvas.width/4, 250);
+            ctx.fillText(awayTeamName, 3*canvas.width/4, 250);
+
+            // Scores (décalés après les logos)
             ctx.font = 'bold 120px Arial';
             ctx.fillStyle = '#ffff00';
             ctx.strokeStyle = '#000';
             ctx.lineWidth = 3;
-            ctx.strokeText(matchState.homeScore, canvas.width/4, 360);
-            ctx.fillText(matchState.homeScore, canvas.width/4, 360);
+            ctx.strokeText(matchState.homeScore, canvas.width/4, 390);
+            ctx.fillText(matchState.homeScore, canvas.width/4, 390);
             ctx.fillStyle = '#fff';
-            ctx.strokeText('-', canvas.width/2, 360);
-            ctx.fillText('-', canvas.width/2, 360);
+            ctx.strokeText('-', canvas.width/2, 390);
+            ctx.fillText('-', canvas.width/2, 390);
             ctx.fillStyle = '#ffff00';
-            ctx.strokeText(matchState.awayScore, 3*canvas.width/4, 360);
-            ctx.fillText(matchState.awayScore, 3*canvas.width/4, 360);
+            ctx.strokeText(matchState.awayScore, 3*canvas.width/4, 390);
+            ctx.fillText(matchState.awayScore, 3*canvas.width/4, 390);
 
             // Temps du match
             ctx.fillStyle = '#fff';
             ctx.font = 'bold 48px Arial';
             const min = Math.floor(matchState.currentTime/60).toString().padStart(2,'0');
             const sec = (matchState.currentTime%60).toString().padStart(2,'0');
-            ctx.strokeText(min + ':' + sec, canvas.width/2, 460);
-            ctx.fillText(min + ':' + sec, canvas.width/2, 460);
+            ctx.strokeText(min + ':' + sec, canvas.width/2, 490);
+            ctx.fillText(min + ':' + sec, canvas.width/2, 490);
 
             // Séparation des événements par équipe
             const homeEvents = matchState.events.filter(e => e.team === 'home').sort((a,b) => a.minute - b.minute);
@@ -1129,16 +1121,16 @@
             ctx.font = 'bold 32px Arial';
             ctx.fillStyle = '#fff';
             ctx.textAlign = 'left';
-            ctx.strokeText(homeTeamName, 80, 540);
-            ctx.fillText(homeTeamName, 80, 540);
+            ctx.strokeText(homeTeamName, 80, 570);
+            ctx.fillText(homeTeamName, 80, 570);
             ctx.textAlign = 'right';
-            ctx.strokeText(awayTeamName, canvas.width - 80, 540);
-            ctx.fillText(awayTeamName, canvas.width - 80, 540);
+            ctx.strokeText(awayTeamName, canvas.width - 80, 570);
+            ctx.fillText(awayTeamName, canvas.width - 80, 570);
 
             // Événements domicile (côté gauche)
             ctx.font = '24px Arial';
             ctx.textAlign = 'left';
-            let yHome = 590;
+            let yHome = 620;
             homeEvents.forEach(event => {
                 if (yHome > 1050) return;
                 const icon = getEventIcon(event.type);
@@ -1151,7 +1143,7 @@
 
             // Événements visiteur (côté droit)
             ctx.textAlign = 'right';
-            let yAway = 590;
+            let yAway = 620;
             awayEvents.forEach(event => {
                 if (yAway > 1050) return;
                 const icon = getEventIcon(event.type);
