@@ -1,139 +1,159 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Score Football Live</title>
-    <link rel="stylesheet" href="style.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px '.Apple Color Emoji UI'; -webkit-text-stroke: #000000; background-color: #ffffff}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px '.Apple Color Emoji UI'; -webkit-text-stroke: #000000; background-color: #ffffff; min-height: 13.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px '.Apple Color Emoji UI'; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+    span.s2 {font-kerning: none; background-color: #ffffff}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="title-section">
-                <input type="text" id="matchTitle" class="title-input" value="⚽ Score Football Live" placeholder="Titre du match">
-                <button id="saveTitleBtn" class="btn btn--sm btn--primary">✅ Sauvegarder</button>
-            </div>
-        </header>
-
-        <!-- Navigation tabs -->
-        <nav class="tabs">
-            <button class="tab-button active" data-tab="saisie">📝 Saisie</button>
-            <button class="tab-button" data-tab="timeline">📋 Timeline</button>
-            <button class="tab-button" data-tab="export">📱 Export</button>
-        </nav>
-
-        <!-- Tab Content: Saisie -->
-        <div id="saisie" class="tab-content active">
-            <div class="match-setup">
-                <!-- Teams configuration -->
-                <div class="teams-grid">
-                    <div class="team-section">
-                        <h3>🏠 Équipe Domicile</h3>
-                        <div class="team-config">
-                            <div class="logo-upload">
-                                <div class="logo-display" id="homeLogo">
-                                    <span class="placeholder">🏠</span>
-                                </div>
-                                <div class="logo-controls">
-                                    <input type="file" id="homeLogoFile" accept="image/*" class="sr-only">
-                                    <button class="btn btn--sm btn--outline logo-upload-btn" data-team="home">📁 Galerie</button>
-                                </div>
-                            </div>
-                            <input type="text" id="homeTeam" placeholder="Nom de l'équipe domicile" class="form-control">
-                            <div class="score-controls">
-                                <span>Score:</span>
-                                <button class="btn btn--sm score-btn" data-team="home" data-action="minus">-</button>
-                                <span id="homeScore" class="score">0</span>
-                                <button class="btn btn--sm score-btn" data-team="home" data-action="plus">+</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="vs-section">
-                        <div class="chrono-display">
-                            <div id="chronoTime">00:00</div>
-                            <div id="matchStatus" class="status status--info">En attente</div>
-                        </div>
-                        <div class="chrono-controls">
-                            <button id="startBtn" class="btn btn--primary">▶️ Start</button>
-                            <button id="pauseBtn" class="btn btn--secondary" disabled>⏸️ Pause</button>
-                            <button id="resetBtn" class="btn btn--outline">🔄 Reset</button>
-                        </div>
-                    </div>
-
-                    <div class="team-section">
-                        <h3>✈️ Équipe Visiteur</h3>
-                        <div class="team-config">
-                            <div class="logo-upload">
-                                <div class="logo-display" id="awayLogo">
-                                    <span class="placeholder">✈️</span>
-                                </div>
-                                <div class="logo-controls">
-                                    <input type="file" id="awayLogoFile" accept="image/*" class="sr-only">
-                                    <button class="btn btn--sm btn--outline logo-upload-btn" data-team="away">📁 Galerie</button>
-                                </div>
-                            </div>
-                            <input type="text" id="awayTeam" placeholder="Nom de l'équipe visiteur" class="form-control">
-                            <div class="score-controls">
-                                <span>Score:</span>
-                                <button class="btn btn--sm score-btn" data-team="away" data-action="minus">-</button>
-                                <span id="awayScore" class="score">0</span>
-                                <button class="btn btn--sm score-btn" data-team="away" data-action="plus">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Events section -->
-                <div class="events-section">
-                    <h3>📝 Événements</h3>
-                    <div class="events-grid">
-                        <div class="event-column">
-                            <h4>🏠 Domicile</h4>
-                            <div class="event-buttons">
-                                <button class="btn btn--sm event-btn" data-team="home" data-event="goal">⚽ But</button>
-                                <button class="btn btn--sm event-btn" data-team="home" data-event="yellow">🟨 Carton</button>
-                                <button class="btn btn--sm event-btn" data-team="home" data-event="red">🟥 Rouge</button>
-                                <button class="btn btn--sm event-btn" data-team="home" data-event="substitution">🔄 Rempl.</button>
-                            </div>
-                        </div>
-                        <div class="event-column">
-                            <h4>✈️ Visiteur</h4>
-                            <div class="event-buttons">
-                                <button class="btn btn--sm event-btn" data-team="away" data-event="goal">⚽ But</button>
-                                <button class="btn btn--sm event-btn" data-team="away" data-event="yellow">🟨 Carton</button>
-                                <button class="btn btn--sm event-btn" data-team="away" data-event="red">🟥 Rouge</button>
-                                <button class="btn btn--sm event-btn" data-team="away" data-event="substitution">🔄 Rempl.</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab Content: Timeline -->
-        <div id="timeline" class="tab-content">
-            <h3>📋 Timeline du Match</h3>
-            <div id="eventsList" class="events-timeline">
-                <p class="no-events">Aucun événement pour le moment</p>
-            </div>
-            <button id="clearTimeline" class="btn btn--outline">🗑️ Vider Timeline</button>
-        </div>
-
-        <!-- Tab Content: Export -->
-        <div id="export" class="tab-content">
-            <h3>📱 Export WhatsApp</h3>
-            <div class="export-preview">
-                <canvas id="exportCanvas" width="400" height="300"></canvas>
-            </div>
-            <div class="export-controls">
-                <button id="generateExport" class="btn btn--primary btn--full-width">🎨 Générer Image</button>
-                <button id="downloadExport" class="btn btn--secondary btn--full-width" style="display: none;">💾 Télécharger</button>
-                <button id="shareWhatsApp" class="btn btn--success btn--full-width" style="display: none;">📱 Partager WhatsApp</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="fr"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;Score Football Live&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="style.css"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;header class="header"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="title-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;input type="text" id="matchTitleInput" class="title-input" value="⚽ Score Football Live" placeholder="Titre du match"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button id="saveTitleBtn" class="btn btn--sm btn--primary"&gt;✅&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h1 id="matchTitle"&gt;⚽ Score Football Live&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Navigation tabs --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;nav class="tabs"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="tab-button active" data-tab="saisie"&gt;📝 Saisie&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="tab-button" data-tab="timeline"&gt;📋 Timeline&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="tab-button" data-tab="export"&gt;📱 Export&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab Content: Saisie --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="saisie" class="tab-content active"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="match-setup"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;!-- Teams configuration --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="teams-grid"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="team-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;🏠 Équipe Domicile&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="team-config"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="logo-upload"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="logo-display" id="homeLogo"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="placeholder"&gt;🏠&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;input type="file" id="homeLogoFile" accept="image/*" class="sr-only"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button id="homeLogoBtn" class="btn btn--sm btn--outline"&gt;🖼️ Logo&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;input type="text" id="homeTeam" placeholder="Nom de l'équipe domicile" class="form-control team-input"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="score-controls"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--lg score-btn" data-team="home" data-action="minus"&gt;-&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span id="homeScore" class="score"&gt;0&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--lg score-btn" data-team="home" data-action="plus"&gt;+&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="team-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;✈️ Équipe Visiteur&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="team-config"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="logo-upload"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div class="logo-display" id="awayLogo"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span class="placeholder"&gt;✈️&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;input type="file" id="awayLogoFile" accept="image/*" class="sr-only"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button id="awayLogoBtn" class="btn btn--sm btn--outline"&gt;🖼️ Logo&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;input type="text" id="awayTeam" placeholder="Nom de l'équipe visiteur" class="form-control team-input"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="score-controls"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--lg score-btn" data-team="away" data-action="minus"&gt;-&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span id="awayScore" class="score"&gt;0&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--lg score-btn" data-team="away" data-action="plus"&gt;+&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;!-- Match controls --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="match-controls"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="chrono-display"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div id="chronoTime" class="chrono"&gt;00:00&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div id="matchStatus" class="status"&gt;En attente&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="control-buttons"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;button id="startBtn" class="btn btn--primary"&gt;▶️ Start&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;button id="pauseBtn" class="btn btn--secondary" disabled&gt;⏸️ Pause&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;button id="resetBtn" class="btn btn--outline"&gt;🔄 Reset&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;!-- Event buttons --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="events-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;h3&gt;📊 Événements&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="events-grid"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="events-team"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h4&gt;🏠 Domicile&lt;/h4&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="event-buttons"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="home" data-event="goal"&gt;⚽ But&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="home" data-event="yellow"&gt;🟨 Jaune&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="home" data-event="red"&gt;🟥 Rouge&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="home" data-event="substitution"&gt;🔄 Rempl.&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div id="homeEvents" class="events-list"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="events-team"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h4&gt;✈️ Visiteur&lt;/h4&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="event-buttons"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="away" data-event="goal"&gt;⚽ But&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="away" data-event="yellow"&gt;🟨 Jaune&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="away" data-event="red"&gt;🟥 Rouge&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;button class="btn btn--event event-btn" data-team="away" data-event="substitution"&gt;🔄 Rempl.&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div id="awayEvents" class="events-list"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab Content: Timeline --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="timeline" class="tab-content"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="timeline-header"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2&gt;📋 Timeline du Match&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div id="timelineContainer" class="timeline-container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="timeline-empty"&gt;Aucun événement pour le moment&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- Tab Content: Export --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="export" class="tab-content"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="export-section"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2&gt;📱 Export WhatsApp&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="export-controls"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;button id="generateBtn" class="btn btn--primary btn--lg"&gt;🎨 Générer&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;button id="downloadBtn" class="btn btn--secondary btn--lg" style="display: none;"&gt;💾 Télécharger&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="canvas-preview"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;canvas id="exportCanvas" width="1080" height="1080"&gt;&lt;/canvas&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="app.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p3"><span class="s2">&lt;/html&gt;</span></p>
 </body>
 </html>
