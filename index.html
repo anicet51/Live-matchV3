@@ -9,11 +9,10 @@
 <body>
     <div class="container">
         <header class="header">
-            <div class="title-editor">
-                <input type="text" id="matchTitleInput" class="title-input" placeholder="Titre du match" value="⚽ Score Football Live">
-                <button id="saveTitleBtn" class="btn btn--sm btn--primary title-save-btn">✅</button>
+            <div class="title-section">
+                <input type="text" id="matchTitle" class="title-input" value="⚽ Score Football Live" placeholder="Titre du match">
+                <button id="saveTitleBtn" class="btn btn--sm btn--primary">✅ Sauvegarder</button>
             </div>
-            <h1 id="matchTitle">⚽ Score Football Live</h1>
         </header>
 
         <!-- Navigation tabs -->
@@ -35,15 +34,30 @@
                                 <div class="logo-display" id="homeLogo">
                                     <span class="placeholder">🏠</span>
                                 </div>
-                                <input type="file" id="homeLogoFile" accept="image/*" class="sr-only">
-                                <button id="homeLogoFileBtn" class="btn btn--sm btn--outline">🖼️ Logo</button>
+                                <div class="logo-controls">
+                                    <input type="file" id="homeLogoFile" accept="image/*" class="sr-only">
+                                    <button class="btn btn--sm btn--outline logo-upload-btn" data-team="home">📁 Galerie</button>
+                                </div>
                             </div>
-                            <input type="text" id="homeTeam" placeholder="Nom de l'équipe domicile" class="form-control team-input">
+                            <input type="text" id="homeTeam" placeholder="Nom de l'équipe domicile" class="form-control">
                             <div class="score-controls">
-                                <button class="btn btn--lg score-btn" data-team="home" data-action="minus">-</button>
+                                <span>Score:</span>
+                                <button class="btn btn--sm score-btn" data-team="home" data-action="minus">-</button>
                                 <span id="homeScore" class="score">0</span>
-                                <button class="btn btn--lg score-btn" data-team="home" data-action="plus">+</button>
+                                <button class="btn btn--sm score-btn" data-team="home" data-action="plus">+</button>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="vs-section">
+                        <div class="chrono-display">
+                            <div id="chronoTime">00:00</div>
+                            <div id="matchStatus" class="status status--info">En attente</div>
+                        </div>
+                        <div class="chrono-controls">
+                            <button id="startBtn" class="btn btn--primary">▶️ Start</button>
+                            <button id="pauseBtn" class="btn btn--secondary" disabled>⏸️ Pause</button>
+                            <button id="resetBtn" class="btn btn--outline">🔄 Reset</button>
                         </div>
                     </div>
 
@@ -54,56 +68,43 @@
                                 <div class="logo-display" id="awayLogo">
                                     <span class="placeholder">✈️</span>
                                 </div>
-                                <input type="file" id="awayLogoFile" accept="image/*" class="sr-only">
-                                <button id="awayLogoFileBtn" class="btn btn--sm btn--outline">🖼️ Logo</button>
+                                <div class="logo-controls">
+                                    <input type="file" id="awayLogoFile" accept="image/*" class="sr-only">
+                                    <button class="btn btn--sm btn--outline logo-upload-btn" data-team="away">📁 Galerie</button>
+                                </div>
                             </div>
-                            <input type="text" id="awayTeam" placeholder="Nom de l'équipe visiteur" class="form-control team-input">
+                            <input type="text" id="awayTeam" placeholder="Nom de l'équipe visiteur" class="form-control">
                             <div class="score-controls">
-                                <button class="btn btn--lg score-btn" data-team="away" data-action="minus">-</button>
+                                <span>Score:</span>
+                                <button class="btn btn--sm score-btn" data-team="away" data-action="minus">-</button>
                                 <span id="awayScore" class="score">0</span>
-                                <button class="btn btn--lg score-btn" data-team="away" data-action="plus">+</button>
+                                <button class="btn btn--sm score-btn" data-team="away" data-action="plus">+</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Match controls -->
-                <div class="match-controls">
-                    <div class="chrono-display">
-                        <div id="chronoTime" class="chrono">00:00</div>
-                        <div id="matchStatus" class="status">En attente</div>
-                    </div>
-                    <div class="control-buttons">
-                        <button id="startBtn" class="btn btn--primary">▶️ Démarrer</button>
-                        <button id="pauseBtn" class="btn btn--secondary" disabled>⏸️ Pause</button>
-                        <button id="resetBtn" class="btn btn--outline">🔄 Reset</button>
-                    </div>
-                </div>
-
-                <!-- Event buttons -->
+                <!-- Events section -->
                 <div class="events-section">
-                    <h3>📊 Événements</h3>
+                    <h3>📝 Événements</h3>
                     <div class="events-grid">
-                        <div class="events-team">
+                        <div class="event-column">
                             <h4>🏠 Domicile</h4>
                             <div class="event-buttons">
-                                <button class="btn btn--event event-btn" data-team="home" data-event="goal">⚽ But</button>
-                                <button class="btn btn--event event-btn" data-team="home" data-event="yellow">🟨 Jaune</button>
-                                <button class="btn btn--event event-btn" data-team="home" data-event="red">🟥 Rouge</button>
-                                <button class="btn btn--event event-btn" data-team="home" data-event="substitution">🔄 Rempl.</button>
+                                <button class="btn btn--sm event-btn" data-team="home" data-event="goal">⚽ But</button>
+                                <button class="btn btn--sm event-btn" data-team="home" data-event="yellow">🟨 Carton</button>
+                                <button class="btn btn--sm event-btn" data-team="home" data-event="red">🟥 Rouge</button>
+                                <button class="btn btn--sm event-btn" data-team="home" data-event="substitution">🔄 Rempl.</button>
                             </div>
-                            <div id="homeEvents" class="events-list"></div>
                         </div>
-
-                        <div class="events-team">
+                        <div class="event-column">
                             <h4>✈️ Visiteur</h4>
                             <div class="event-buttons">
-                                <button class="btn btn--event event-btn" data-team="away" data-event="goal">⚽ But</button>
-                                <button class="btn btn--event event-btn" data-team="away" data-event="yellow">🟨 Jaune</button>
-                                <button class="btn btn--event event-btn" data-team="away" data-event="red">🟥 Rouge</button>
-                                <button class="btn btn--event event-btn" data-team="away" data-event="substitution">🔄 Rempl.</button>
+                                <button class="btn btn--sm event-btn" data-team="away" data-event="goal">⚽ But</button>
+                                <button class="btn btn--sm event-btn" data-team="away" data-event="yellow">🟨 Carton</button>
+                                <button class="btn btn--sm event-btn" data-team="away" data-event="red">🟥 Rouge</button>
+                                <button class="btn btn--sm event-btn" data-team="away" data-event="substitution">🔄 Rempl.</button>
                             </div>
-                            <div id="awayEvents" class="events-list"></div>
                         </div>
                     </div>
                 </div>
@@ -112,27 +113,23 @@
 
         <!-- Tab Content: Timeline -->
         <div id="timeline" class="tab-content">
-            <div class="timeline-header">
-                <h2>📋 Timeline du Match</h2>
+            <h3>📋 Timeline du Match</h3>
+            <div id="eventsList" class="events-timeline">
+                <p class="no-events">Aucun événement pour le moment</p>
             </div>
-            <div id="timelineContainer" class="timeline-container">
-                <div class="timeline-empty">
-                    Aucun événement pour le moment
-                </div>
-            </div>
+            <button id="clearTimeline" class="btn btn--outline">🗑️ Vider Timeline</button>
         </div>
 
         <!-- Tab Content: Export -->
         <div id="export" class="tab-content">
-            <div class="export-section">
-                <h2>📱 Export WhatsApp</h2>
-                <div class="export-controls">
-                    <button id="generateBtn" class="btn btn--primary btn--lg">🎨 Générer le Visuel</button>
-                    <button id="downloadBtn" class="btn btn--secondary btn--lg" style="display: none;">💾 Télécharger l'Image</button>
-                </div>
-                <div class="canvas-preview">
-                    <canvas id="exportCanvas" width="1080" height="1080" style="max-width: 100%; height: auto; border: 1px solid #ccc;"></canvas>
-                </div>
+            <h3>📱 Export WhatsApp</h3>
+            <div class="export-preview">
+                <canvas id="exportCanvas" width="400" height="300"></canvas>
+            </div>
+            <div class="export-controls">
+                <button id="generateExport" class="btn btn--primary btn--full-width">🎨 Générer Image</button>
+                <button id="downloadExport" class="btn btn--secondary btn--full-width" style="display: none;">💾 Télécharger</button>
+                <button id="shareWhatsApp" class="btn btn--success btn--full-width" style="display: none;">📱 Partager WhatsApp</button>
             </div>
         </div>
     </div>
