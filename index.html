@@ -1038,52 +1038,131 @@
             return labels[eventType] || eventType;
         }
 
-        // -------- EXPORT WHATSAPP ------------
+        // -------- EXPORT WHATSAPP CORRIGÉ ------------
         document.getElementById('generateImg').onclick = function() {
             const canvas = document.getElementById('matchCanvas');
             const ctx = canvas.getContext('2d');
             canvas.style.display = 'block';
 
-            // Fond vert
+            // Fond vert terrain avec bandes
             ctx.fillStyle = '#1e8c38';
             ctx.fillRect(0,0,canvas.width,canvas.height);
 
-            // Titre
+            ctx.fillStyle = '#289c44';
+            for(let i = 0; i < canvas.width; i += 120) {
+                ctx.fillRect(i + 60, 0, 60, canvas.height);
+            }
+
+            // Titre du match
             ctx.fillStyle = '#fff';
             ctx.textAlign = 'center';
             ctx.font = 'bold 48px Arial';
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.strokeText(matchState.title, canvas.width/2, 80);
             ctx.fillText(matchState.title, canvas.width/2, 80);
 
-            // Équipes + scores
-            ctx.font = 'bold 40px Arial';
-            ctx.fillText(matchState.homeTeam||'Domicile', canvas.width/4, 180);
-            ctx.fillText(matchState.awayTeam||'Visiteur', 3*canvas.width/4, 180);
+            // Noms des équipes (avec fallback si vides)
+            const homeTeamName = matchState.homeTeam || 'Équipe Domicile';
+            const awayTeamName = matchState.awayTeam || 'Équipe Visiteur';
 
+            ctx.font = 'bold 36px Arial';
+            ctx.strokeText(homeTeamName, canvas.width/4, 220);
+            ctx.fillText(homeTeamName, canvas.width/4, 220);
+            ctx.strokeText(awayTeamName, 3*canvas.width/4, 220);
+            ctx.fillText(awayTeamName, 3*canvas.width/4, 220);
+
+            // Logos des équipes (cercles)
+            if (matchState.homeLogoDataUrl) {
+                const homeImg = new Image();
+                homeImg.onload = function() {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(canvas.width/4, 160, 40, 0, 2 * Math.PI);
+                    ctx.clip();
+                    ctx.drawImage(homeImg, canvas.width/4 - 40, 120, 80, 80);
+                    ctx.restore();
+                };
+                homeImg.src = matchState.homeLogoDataUrl;
+            }
+
+            if (matchState.awayLogoDataUrl) {
+                const awayImg = new Image();
+                awayImg.onload = function() {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(3*canvas.width/4, 160, 40, 0, 2 * Math.PI);
+                    ctx.clip();
+                    ctx.drawImage(awayImg, 3*canvas.width/4 - 40, 120, 80, 80);
+                    ctx.restore();
+                };
+                awayImg.src = matchState.awayLogoDataUrl;
+            }
+
+            // Scores
             ctx.font = 'bold 120px Arial';
-            ctx.fillText(matchState.homeScore, canvas.width/4, 320);
-            ctx.fillText('-', canvas.width/2, 320);
-            ctx.fillText(matchState.awayScore, 3*canvas.width/4, 320);
+            ctx.fillStyle = '#ffff00';
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 3;
+            ctx.strokeText(matchState.homeScore, canvas.width/4, 360);
+            ctx.fillText(matchState.homeScore, canvas.width/4, 360);
+            ctx.fillStyle = '#fff';
+            ctx.strokeText('-', canvas.width/2, 360);
+            ctx.fillText('-', canvas.width/2, 360);
+            ctx.fillStyle = '#ffff00';
+            ctx.strokeText(matchState.awayScore, 3*canvas.width/4, 360);
+            ctx.fillText(matchState.awayScore, 3*canvas.width/4, 360);
 
-            // Minute courante
+            // Temps du match
+            ctx.fillStyle = '#fff';
             ctx.font = 'bold 48px Arial';
             const min = Math.floor(matchState.currentTime/60).toString().padStart(2,'0');
             const sec = (matchState.currentTime%60).toString().padStart(2,'0');
-            ctx.fillText(min + ':' + sec, canvas.width/2, 420);
+            ctx.strokeText(min + ':' + sec, canvas.width/2, 460);
+            ctx.fillText(min + ':' + sec, canvas.width/2, 460);
 
-            // Timeline courte
-            ctx.font = '28px Arial';
+            // Séparation des événements par équipe
+            const homeEvents = matchState.events.filter(e => e.team === 'home').sort((a,b) => a.minute - b.minute);
+            const awayEvents = matchState.events.filter(e => e.team === 'away').sort((a,b) => a.minute - b.minute);
+
+            // Titres des colonnes
+            ctx.font = 'bold 32px Arial';
+            ctx.fillStyle = '#fff';
             ctx.textAlign = 'left';
-            let y = 500;
-            matchState.events.sort((a,b)=>a.minute-b.minute).forEach(ev=>{
-                if (y>1000) return;
-                const ico = getEventIcon(ev.type);
-                const tName = ev.team==='home' ? (matchState.homeTeam||'Dom') : (matchState.awayTeam||'Vis');
-                const label = getEventLabel(ev.type);
-                const joueur = ev.player ? ' - ' + ev.player : '';
-                ctx.fillText(ev.minute + "' " + ico + ' ' + tName + joueur, 80, y);
-                y+=38;
+            ctx.strokeText(homeTeamName, 80, 540);
+            ctx.fillText(homeTeamName, 80, 540);
+            ctx.textAlign = 'right';
+            ctx.strokeText(awayTeamName, canvas.width - 80, 540);
+            ctx.fillText(awayTeamName, canvas.width - 80, 540);
+
+            // Événements domicile (côté gauche)
+            ctx.font = '24px Arial';
+            ctx.textAlign = 'left';
+            let yHome = 590;
+            homeEvents.forEach(event => {
+                if (yHome > 1050) return;
+                const icon = getEventIcon(event.type);
+                const player = event.player || getEventLabel(event.type);
+                const text = event.minute + "' " + icon + " " + player;
+                ctx.strokeText(text, 80, yHome);
+                ctx.fillText(text, 80, yHome);
+                yHome += 35;
             });
 
+            // Événements visiteur (côté droit)
+            ctx.textAlign = 'right';
+            let yAway = 590;
+            awayEvents.forEach(event => {
+                if (yAway > 1050) return;
+                const icon = getEventIcon(event.type);
+                const player = event.player || getEventLabel(event.type);
+                const text = event.minute + "' " + icon + " " + player;
+                ctx.strokeText(text, canvas.width - 80, yAway);
+                ctx.fillText(text, canvas.width - 80, yAway);
+                yAway += 35;
+            });
+
+            // Afficher le bouton de téléchargement
             document.getElementById('downloadImg').style.display='inline-block';
         };
 
